@@ -26,14 +26,15 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          
-        # Get the current SemVer tag from dockerhub
-        #name: Get Docker image SemVer tag
-        #uses: docker/metadata-action@v4
-        #id: docker-semver-extract
-        #with:
-        #  images: name/markoklin/practice-repo #aandonov/app1:latest
-        #  tags: type=semver,pattern={{ version }}
+      
+        #-
+        #  Get the current SemVer tag from dockerhub
+        #  name: Get Docker image SemVer tag
+        #  uses: docker/metadata-action@v4
+        #  id: docker-semver-extract
+        #  with:
+        #    images: name/markoklin/practice-repo #aandonov/app1:latest
+        #    tags: type=semver,pattern={{ version }}
       
       - 
         name: Build and push app1
