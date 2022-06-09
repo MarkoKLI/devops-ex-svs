@@ -42,4 +42,4 @@ jobs:
         with:
           context: apps/app1/.
           push: true
-          tags: aandonov/app1:stage-v${{ MAJOR }}.${{ MINOR }}.${{ PATCH }}-${{ GITHUB_SHA }}
+          tags: markoklin/practice-repo #aandonov/app1:stage-v${{ MAJOR }}.${{ MINOR }}.${{ PATCH }}-${{ GITHUB_SHA }}
