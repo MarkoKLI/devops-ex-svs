@@ -39,19 +39,19 @@ jobs:
           IFS='.'
           read -a semver <<< ${{ steps.semver-reader.outputs.content }}
           
-          echo "${semver[0]}" >> $V_MAJOR # setting major semver version value 
-          echo "${semver[1]}" >> $V_MINOR # setting minor semver version value
-          echo "${semver[2]}" >> $V_PATCH # setting patch semver version value
-          
-          if [ -z "$V_MAJOR" ] || [ -z "$V_MINOR" ] || [ -z "$V_PATCH" ]; then # basic format check
-              echo "Error: Invalid semver format."
-              exit 1
+          if [ -z "${semver[0]}" ] || [ -z "${semver[1]}" ] || [ -z "${semver[2]}" ]; then # basic format check
+            echo "Error: Invalid semver format."
+            exit 1
           fi
+          
+          echo "V_MAJOR=${semver[0]}" >> $GITHUB_ENV # setting major semver version value 
+          echo "V_MINOR=${semver[1]}" >> $GITHUB_ENV # setting minor semver version value
+          echo "V_PATCH=${semver[2]}" >> $GITHUB_ENV # setting patch semver version value
       - 
         name: Build and push app1
         uses: docker/build-push-action@v3
         with:
           context: apps/app1/.
           push: true
-          tags: markoklin/practice-repo:stage-v${{ V_MAJOR }}.${{ V_MINOR }}.${{ V_PATCH }}-${{ GITHUB_SHA }}
-                #aandonov/app1:stage-v${{ V_MAJOR }}.${{ V_MINOR }}.${{ V_PATCH }}-${{ GITHUB_SHA }}
+          tags: markoklin/practice-repo:stage-v${{ env.V_MAJOR }}.${{ env.V_MINOR }}.${{ env.V_PATCH }}-${{ GITHUB_SHA }}
+                #aandonov/app1:stage-v${{ env.V_MAJOR }}.${{ env.V_MINOR }}.${{ env.V_PATCH }}-${{ GITHUB_SHA }}
