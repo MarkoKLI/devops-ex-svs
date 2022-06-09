@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - 'main'
-      - 'klincharov'
     paths:
       - 'apps/app1/**'
+
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -26,20 +26,32 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
-        #-
-        #  Get the current SemVer tag from dockerhub
-        #  name: Get Docker image SemVer tag
-        #  uses: docker/metadata-action@v4
-        #  id: docker-semver-extract
-        #  with:
-        #    images: name/markoklin/practice-repo #aandonov/app1:latest
-        #    tags: type=semver,pattern={{ version }}
-      
+
+      -
+        name: Get SemVer from file
+        id: semver-reader
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./apps/app1/.version
+          
+      - name: Parse and Load SemVer
+        run: |
+          IFS='.'
+          read -a semver <<< ${{ steps.semver-reader.outputs.content }}
+          
+          echo "${semver[0]}" >> $V_MAJOR # setting major semver version value 
+          echo "${semver[1]}" >> $V_MINOR # setting minor semver version value
+          echo "${semver[2]}" >> $V_PATCH # setting patch semver version value
+          
+          if [ -z "$V_MAJOR" ] || [ -z "$V_MINOR" ] || [ -z "$V_PATCH" ]; then # basic format check
+              echo "Error: Invalid semver format."
+              exit 1
+          fi
       - 
         name: Build and push app1
         uses: docker/build-push-action@v3
         with:
           context: apps/app1/.
           push: true
-          tags: markoklin/aandonov/app1:stage-v${{ MAJOR }}.${{ MINOR }}.${{ PATCH }}-${{ GITHUB_SHA }}
+          tags: markoklin/practice-repo:stage-v${{ MAJOR }}.${{ MINOR }}.${{ PATCH }}-${{ GITHUB_SHA }}
+                #aandonov/app1:stage-v${{ MAJOR }}.${{ MINOR }}.${{ PATCH }}-${{ GITHUB_SHA }}
