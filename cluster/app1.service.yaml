@@ -7,7 +7,7 @@ metadata:
     application: app1
     
 spec:
-  type: NodePort
+  type: ClusterIP
 
   selector:
     application: app1
@@ -15,4 +15,3 @@ spec:
   ports:
   - port: 80
     targetPort: 80
-    nodePort: 30100
