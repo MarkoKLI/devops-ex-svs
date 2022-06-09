@@ -54,4 +54,4 @@ jobs:
           context: apps/app1/.
           push: true
           tags: markoklin/practice-repo:stage-v${{ MAJOR }}.${{ MINOR }}.${{ PATCH }}-${{ GITHUB_SHA }}
-                #aandonov/app1:stage-v${{ MAJOR }}.${{ MINOR }}.${{ PATCH }}-${{ GITHUB_SHA }}
+                #aandonov/app1:stage-v${{ V_MAJOR }}.${{ V_MINOR }}.${{ V_PATCH }}-${{ GITHUB_SHA }}
