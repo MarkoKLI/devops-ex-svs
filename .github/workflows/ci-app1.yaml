@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'main'
+      - 'klincharov'
     paths:
       - 'apps/app1/**'
 jobs:
@@ -25,18 +26,19 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
+          
         # Get the current SemVer tag from dockerhub
-        name: Get Docker image SemVer tag
-        uses: docker/metadata-action@v4
-        id: docker-semver-extract
-        with:
-          images: name/markoklin/practice-repo #aandonov/app1:latest
-          tags: type=semver,pattern={{ version }}
+        #name: Get Docker image SemVer tag
+        #uses: docker/metadata-action@v4
+        #id: docker-semver-extract
+        #with:
+        #  images: name/markoklin/practice-repo #aandonov/app1:latest
+        #  tags: type=semver,pattern={{ version }}
+      
       - 
         name: Build and push app1
         uses: docker/build-push-action@v3
         with:
           context: apps/app1/.
           push: true
-          tags: markoklin/practice-repo:stage-${{ steps.docker-semver-extract.outputs }}-${{ GITHUB_SHA }} #aandonov/app1:stage-${{ steps.docker-semver-extract.outputs }}-${{ GITHUB_SHA }}
+          tags: aandonov/app1:stage-v${{ MAJOR }}.${{ MINOR }}.${{ PATCH }}-${{ GITHUB_SHA }}
