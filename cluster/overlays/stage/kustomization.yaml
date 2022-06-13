@@ -5,7 +5,8 @@ resources:
 - ../../base
 
 labels:
-  environment: test-stage
+  - pairs:
+      environment: test-stage
 
 namePrefix: test-stage-
 
