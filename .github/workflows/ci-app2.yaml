@@ -55,7 +55,9 @@ jobs:
           context: apps/app2/.
           push: true
           tags: |
-            markoklin/practice-repo-2:stage-v${{ env.V_MAJOR }}.${{ env.V_MINOR }}.${{ env.V_PATCH }}-${{ env.GITHUB_SHA_VALUE }},
-            markoklin/practice-repo-2:latest        
+            markoklin/practice-repo-2:stage-v${{ env.V_MAJOR }}.${{ env.V_MINOR }}.${{ env.V_PATCH }}-${{ env.GITHUB_SHA_VALUE }}  
             #aandonov/app2:stage-v${{ env.V_MAJOR }}.${{ env.V_MINOR }}.${{ env.V_PATCH }}-${{ env.GITHUB_SHA_VALUE }}
-            #aandonov/app2:latest
+            markoklin/practice-repo-2:latest  
+            #aandonov/app2:latest        
+            
+            
