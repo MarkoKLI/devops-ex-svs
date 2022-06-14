@@ -24,4 +24,4 @@ jobs:
     steps:
     - name: print_environment
       run: |
-        echo $env
+        printenv
