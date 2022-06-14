@@ -63,7 +63,7 @@ jobs:
         
       -
         name: Save current version
-        uses: frdrwrt/write-to-file
+        uses: frdrwrt/write-to-file@v1.3
         with:
           filepath: ${{env.home}}/apps/app1/.version
           content: "${{ env.V_MAJOR }}.${{ env.V_MINOR }}.${{ env.V_PATCH }}"  
