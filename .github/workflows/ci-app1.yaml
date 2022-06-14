@@ -63,12 +63,11 @@ jobs:
         
       -
         name: Save current version
-        uses: damianreeves/write-file-action
+        uses: frdrwrt/write-to-file
         with:
-          path: ${{env.home}}/apps/app1/.version
-          contents: |
-            echo {{ env.V_MAJOR }}.${{ env.V_MINOR }}.${{ env.V_PATCH }}  
-          write-mode: overwrite
+          filepath: ${{env.home}}/apps/app1/.version
+          content: "${{ env.V_MAJOR }}.${{ env.V_MINOR }}.${{ env.V_PATCH }}"  
+          mode: 0644
 
       - 
         name: Build and push app1
