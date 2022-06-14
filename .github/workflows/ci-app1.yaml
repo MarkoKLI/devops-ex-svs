@@ -72,7 +72,7 @@ jobs:
           
       -
         name: Push current version file
-        uses: ad-m/github-push-action
+        uses: ad-m/github-push-action@master
         with: 
           github_token: ${{ secrets.GITHUB_PASSWORD }}                                          # Password would need to be provided for this step as actions secret
           branch: ${{ github.ref }}
