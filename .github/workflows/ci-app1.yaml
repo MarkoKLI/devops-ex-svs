@@ -63,7 +63,7 @@ jobs:
         
       -
         name: Save current version
-        uses: DamianReeves/write-file-action
+        uses: damianreeves/write-file-action
         with:
           path: ${{env.home}}/apps/app1/.version
           contents: |
