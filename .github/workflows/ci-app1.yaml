@@ -60,7 +60,7 @@ jobs:
           echo "V_MINOR=${semver[1]}" >> $GITHUB_ENV                                            # setting minor semver version value
           echo "V_PATCH=$GITHUB_RUN_NUMBER" >> $GITHUB_ENV                                      # setting patch semver version value
 
-          echo "${{env.V_MAJOR}}.${{env.V_MINOR}}.${{env.V_PATCH}}" > apps/app1/.version 
+          echo "${ semver[0] }.${ semver[1] }.${ GITHUB_RUN_NUMBER }" > ./apps/app1/.version 
       - 
         name: Build and push app1
         uses: docker/build-push-action@v3
