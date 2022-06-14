@@ -3,7 +3,9 @@ name: ci-app1
 on:
   push:
     branches:
+      - 'vprocopan'
       - 'main'
+      - 'klincharov'
     paths:
       - 'apps/app1/**'
 
@@ -14,6 +16,15 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}   # checkout the correct branch name
+          fetch-depth: 0                # fetch the whole repo history
+      - 
+        name: Git Version
+        uses: codacy/git-version@2.2.0
+        with:
+          prefix: cluster-
+          log-path: cluster/
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -39,15 +50,17 @@ jobs:
           IFS='.'
           read -a semver <<< ${{ steps.semver-reader.outputs.content }}
           
-          if [ -z "${semver[0]}" ] || [ -z "${semver[1]}" ] || [ -z "${semver[2]}" ]; then # basic format check
+          if [ -z "${semver[0]}" ] || [ -z "${semver[1]}" ] || [ -z "${semver[2]}" ]; then      # basic format check
             echo "Error: Invalid semver format."
             exit 1
           fi
           
-          echo "GITHUB_SHA_VALUE=`echo $GITHUB_SHA | cut -c 9- `" >> $GITHUB_ENV # setting patch semver version value
-          echo "V_MAJOR=${semver[0]}" >> $GITHUB_ENV # setting major semver version value 
-          echo "V_MINOR=${semver[1]}" >> $GITHUB_ENV # setting minor semver version value
-          echo "V_PATCH=${semver[2]}" >> $GITHUB_ENV # setting patch semver version value
+          echo "GITHUB_SHA_VALUE=`echo $GITHUB_SHA | cut -c 9- `" >> $GITHUB_ENV                # setting patch semver version value
+          echo "V_MAJOR=${semver[0]}" >> $GITHUB_ENV                                            # setting major semver version value 
+          echo "V_MINOR=${semver[1]}" >> $GITHUB_ENV                                            # setting minor semver version value
+          echo "V_PATCH=$GITHUB_RUN_NUMBER" >> $GITHUB_ENV                                      # setting patch semver version value
+
+          echo "${{env.V_MAJOR}}.${{env.V_MINOR}}.${{env.V_PATCH}}" > apps/app1/.version 
       - 
         name: Build and push app1
         uses: docker/build-push-action@v3
@@ -57,3 +70,4 @@ jobs:
           tags: |
             aandonov/app1:stage-v${{ env.V_MAJOR }}.${{ env.V_MINOR }}.${{ env.V_PATCH }}-${{ env.GITHUB_SHA_VALUE }}
             aandonov/app1:latest
+          # tags: aandonov/app1:{MAJOR}.{MINOR}.{PATCH}-{sanitized-branch-name}.{commits-distance}.{hash}
