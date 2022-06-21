@@ -1,0 +1,39 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+
+metadata:
+  name: local-vservice
+  namespace: test-local
+
+spec:
+  hosts:
+  - istio.test-local.lrn-srv-01.edu
+
+  gateways:
+  - test-local/local-gateway
+
+  http:
+  - name: app1-svc
+    match:
+    - uri:
+        prefix: "/app1"
+    rewrite:
+      uri: "/"
+    route:
+    - destination:
+        host: test-local-app1-svc.test-local.svc.cluster.local
+        port:
+          number: 80
+
+  - name: app2-svc
+    match:
+    - uri:
+        prefix: "/app2"
+    rewrite:
+      uri: "/"
+    route:
+    - destination:
+        host: test-local-app2-svc.test-local.svc.cluster.local
+        port:
+          number: 80
+
