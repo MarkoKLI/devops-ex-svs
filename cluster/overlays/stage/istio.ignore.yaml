@@ -1,0 +1,5 @@
+apiVersion: networking.istio.io/v1beta1
+metadata:
+  labels: 
+    application: istio
+$patch: delete

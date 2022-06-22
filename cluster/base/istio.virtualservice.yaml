@@ -3,6 +3,8 @@ kind: VirtualService
 
 metadata:
   name: app-vservice
+  labels:
+    application: istio
 
 spec:
   hosts: []
