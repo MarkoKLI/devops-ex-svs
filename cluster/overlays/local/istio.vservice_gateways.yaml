@@ -1,0 +1,4 @@
+# Specify which Istio Ingress Gateways to connect the virtual service to
+- op: add
+  path: /spec/gateways/-
+  value: test-local/test-local-app-gateway
