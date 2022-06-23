@@ -6,5 +6,3 @@ resources:
 - app1.service.yaml
 - app2.deployment.yaml
 - app2.service.yaml
-- istio.virtualservice.yaml
-- istio.gateway.yaml
