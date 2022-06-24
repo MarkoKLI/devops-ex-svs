@@ -47,8 +47,8 @@
               - app1-svc-http
             destinationRule:
               name: local-app1-destrule
-              stableSubsetName: stable 
-              canarySubsetName: canary
+              stableSubsetName: app1-stable 
+              canarySubsetName: app1-canary
               
         steps:
         - setWeight: 10
