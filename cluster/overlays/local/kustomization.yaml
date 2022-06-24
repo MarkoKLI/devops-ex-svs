@@ -29,13 +29,13 @@ patches:
     version: v1beta1
     kind: VirtualService
     name: app-vservice
-  path: app1.http-service.yaml
+  path: app1-http.vservice-path.yaml
 
 - target:
     version: v1beta1
     kind: VirtualService
     name: app-vservice
-  path: app2.http-service.yaml
+  path: app2-http.vservice-path.yaml
 
 ## App - Istio Ingress Gateway Patches: ##
 - target:
