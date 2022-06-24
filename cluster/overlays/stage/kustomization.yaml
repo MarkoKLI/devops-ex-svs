@@ -6,11 +6,11 @@ resources:
 
 labels:
   - pairs:
-      environment: test-stage
+      environment: stage
 
-namePrefix: test-stage-
+namePrefix: stage-
 
-namespace: test-stage
+namespace: stage
 
 patches:
 - target:

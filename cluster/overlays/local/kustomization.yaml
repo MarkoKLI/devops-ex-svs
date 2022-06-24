@@ -5,9 +5,9 @@ resources:
 - ../../base/
 - ../../istio-base/
 
-namePrefix: test-local-
+namePrefix: local-
 
-namespace: test-local
+namespace: local
 
 patches:
 

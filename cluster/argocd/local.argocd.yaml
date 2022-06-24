@@ -2,24 +2,21 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 
 metadata:
-  name: test-local-application
+  name: local-application
   namespace: argocd
 
 spec:
   project: default
 
   destination:
-    namespace: test-local
+    namespace: local
     server: https://kubernetes.default.svc
 
   source:
-    repoURL: https://github.com/markokli/devops-ex-svs
-    targetRevision: HEAD
+    repoURL: https://github.com/theelasticband/devops
+    targetRevision: klincharov
     path: cluster/overlays/local
 
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: false

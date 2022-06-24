@@ -1,4 +1,4 @@
-# Setup HTTP access to APP1 via service on test-local environment
+# Setup HTTP access to APP1 via service on local environment
 - op: add
   path: /spec/http/-
   value:
@@ -10,6 +10,6 @@
       uri: "/"
     route:
     - destination:
-        host: test-local-app1-svc.test-local.svc.cluster.local
+        host: local-app1-svc.local.svc.cluster.local
         port:
           number: 80

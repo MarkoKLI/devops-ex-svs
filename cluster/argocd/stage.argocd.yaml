@@ -2,24 +2,24 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 
 metadata:
-  name: test-stage-app
+  name: stage-app
   namespace: argocd
 
 spec:
   project: default
 
   destination:
-    namespace: test-stage
+    namespace: stage
     server: https://kubernetes.default.svc
 
   source:
-    repoURL: https://github.com/markokli/devops-ex-svs
-    targetRevision: HEAD
+    repoURL: https://github.com/theelasticband/devops/
+    targetRevision: klincharov
     path: cluster/overlays/stage
 
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: false
+        #    automated:
+        #      prune: true
+        #      selfHeal: false
