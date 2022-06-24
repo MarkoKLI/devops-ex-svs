@@ -20,6 +20,5 @@
       destination:
         host: local-app1-svc.local.svc.cluster.local
         subset: app1-canary
-        weight: 100
         port:
           number: 80
