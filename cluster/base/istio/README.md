@@ -1,4 +1,4 @@
-# istio-base module
+# istio base module
 
 This directory is to serve as a base for kustomization of istio-related infrastructure.
 

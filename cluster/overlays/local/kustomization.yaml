@@ -3,7 +3,8 @@ kind: Kustomization
 
 resources:
 - ../../base/
-- ../../istio-base/
+- ../../base/istio/
+- ../../base/argo-rollouts/
 
 namePrefix: local-
 
@@ -42,4 +43,3 @@ patches:
     kind: Gateway
     name: app-gateway
   path: gateway.http_port_80.yaml
-

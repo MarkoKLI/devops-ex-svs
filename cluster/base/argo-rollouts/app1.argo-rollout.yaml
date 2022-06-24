@@ -1,0 +1,61 @@
+
+  apiVersion: argoproj.io/v1alpha1
+  kind: Rollout
+
+  metadata:
+    name: app1-argo-rollout
+    labels:
+      application: app1
+
+  spec:
+    replicas: 10
+    minReadySeconds: 30
+    revisionHistoryLimit: 3
+
+    selector:
+      matchLabels:
+        application: app1
+
+    template:
+      metadata:
+        labels:
+          application: app1
+
+      spec:
+        containers:
+        - name: app1
+          image: markoklin/practice-repo-1:stage-v7.6.25-b96b7fce0a615da4c365a29f0d379b32 #aandonov/app1:latest
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "200m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          ports:
+          - containerPort: 80
+
+    strategy:
+      canary:
+        dynamicStableScale: true
+        
+        trafficRouting:
+          istio:
+            virtualService:
+              name: local-app-vservice
+              routes: 
+              - app1-svc-http
+            destinationRule:
+              name: local-app1-destrule
+              stableSubsetName: stable 
+              canarySubsetName: canary
+              
+        steps:
+        - setWeight: 10
+        - pause: { } 
+        - setWeight: 20
+        - pause: { duration: 30s }              
+        - setWeight: 40
+        - pause: { duration: 30s }
+        - setWeight: 50
+        - pause: { }
