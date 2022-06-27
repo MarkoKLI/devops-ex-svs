@@ -28,11 +28,11 @@
 #aandonov/app1:latest
           resources:
             requests:
-              memory: "128Mi"
-              cpu: "200m"
+              memory: "50Mi"
+              cpu: "64m"
             limits:
-              memory: "128Mi"
-              cpu: "200m"
+              memory: "200Mi"
+              cpu: "256m"
           ports:
           - containerPort: 80
 
