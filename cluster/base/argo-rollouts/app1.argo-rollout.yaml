@@ -24,7 +24,8 @@
       spec:
         containers:
         - name: app1
-          image: aandonov/app1:stage-v1.0.1-bf54ab3  
+          image: markoklin/practice-repo-1:stage-v7.6.25-b96b7fce0a615da4c365a29f0d379b32
+#aandonov/app1:stage-v1.0.1-bf54ab3  
 #aandonov/app1:latest
           resources:
             requests:
