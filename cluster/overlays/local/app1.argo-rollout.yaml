@@ -3,7 +3,7 @@
 ## Configure container image of APP1 to be used
 - op: replace
   path: /spec/template/spec/containers/0/image
-  value: aandonov/app1:stage-v1.0.1-bf54ab3
+  value: aandonov/app1:latest
 
 ## Configure deployment strategy of APP1 to be used
 - op: replace
