@@ -3,7 +3,7 @@
 ## Configure DestinationRule request hostname
 - op: add
   path: /spec/host
-  value: istio.local.devops.net
+  value: local-app1-svc.local.svc.cluster.local
 
 ## Configure subset for routing to stable ReplicaSet
 - op: add
