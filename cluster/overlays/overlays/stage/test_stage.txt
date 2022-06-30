@@ -1,0 +1,161 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    environment: stage
+    istio-injection: enabled
+  name: stage
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    application: app1
+    environment: stage
+  name: stage-app1-svc
+  namespace: stage
+spec:
+  ports:
+  - name: http-default
+    port: 80
+    targetPort: 80
+  selector:
+    application: app1
+    role: worker-node
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    application: app2
+    environment: stage
+  name: stage-app2-svc
+  namespace: stage
+spec:
+  ports:
+  - name: http-default
+    port: 80
+    targetPort: 80
+  selector:
+    application: app2
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    application: app1
+    environment: stage
+  name: stage-app1-dpl
+  namespace: stage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      application: app1
+  template:
+    metadata:
+      labels:
+        application: app1
+        role: worker-node
+    spec:
+      containers:
+      - image: aandonov/app1:latest
+        name: app1
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 200m
+            memory: 128Mi
+          requests:
+            cpu: 200m
+            memory: 128Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    application: app2
+    environment: stage
+  name: stage-app2-dpl
+  namespace: stage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      application: app2
+  template:
+    metadata:
+      labels:
+        application: app2
+    spec:
+      containers:
+      - image: aandonov/app2:latest
+        name: app2
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 200m
+            memory: 128Mi
+          requests:
+            cpu: 200m
+            memory: 128Mi
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  labels:
+    application: istio
+    environment: stage
+  name: stage-app-gateway
+  namespace: stage
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - istio.stage.devops.net
+    port:
+      name: http-80
+      number: 80
+      protocol: HTTP
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  labels:
+    application: istio
+    environment: stage
+  name: stage-app-vservice
+  namespace: stage
+spec:
+  gateways:
+  - stage/stage-app-gateway
+  hosts:
+  - istio.stage.devops.net
+  http:
+  - match:
+    - uri:
+        prefix: /app1
+    name: app1-svc-http
+    rewrite:
+      uri: /
+    route:
+    - destination:
+        host: stage-app1-svc.stage.svc.cluster.local
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: /app2
+    name: app2-svc-http
+    rewrite:
+      uri: /
+    route:
+    - destination:
+        host: stage-app2-svc.stage.svc.cluster.local
+        port:
+          number: 80
