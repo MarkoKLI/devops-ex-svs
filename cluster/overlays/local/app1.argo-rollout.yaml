@@ -8,7 +8,7 @@
 ## Configure instance count in rollout
 - op: replace
   path: /spec/replicas
-  value: 5
+  value: 1 
 
 ## Configure deployment strategy of APP1 to be used
 - op: replace
@@ -28,10 +28,10 @@
             stableSubsetName: local-app1-stable 
             canarySubsetName: local-app1-canary
             
-      steps:
-      - setWeight: 10
-      - pause: { } 
-      - setWeight: 30
-      - pause: { duration: 30s }
-      - setWeight: 50
-      - pause: { }
+            #      steps:
+            #- setWeight: 10
+            #- pause: { } 
+            #- setWeight: 30
+            #- pause: { duration: 30s }
+            #- setWeight: 50
+            #- pause: { }
