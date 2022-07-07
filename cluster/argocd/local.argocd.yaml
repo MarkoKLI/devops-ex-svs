@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 
 metadata:
-  name: local-application
+  name: local-application-pvt
   namespace: argocd
 
 spec:
